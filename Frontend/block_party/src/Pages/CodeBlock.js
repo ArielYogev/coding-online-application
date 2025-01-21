@@ -1,26 +1,29 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { io } from 'socket.io-client'; 
+import { io } from 'socket.io-client';
 import './CodeBlock.css';
 
 function CodeBlock() {
   const { blockId } = useParams(); // Extract the block ID from the URL
   const socket = useRef(null); // Ref to manage the WebSocket connection
-  const [codeBlock, setCodeBlock] = useState(null); 
-  const [role, setRole] = useState(null); 
-  const [userCount, setUserCount] = useState(0); 
-  const [isSolved, setIsSolved] = useState(false); 
+  const [codeBlock, setCodeBlock] = useState(null);
+  const [role, setRole] = useState(null);
+  const [userCount, setUserCount] = useState(0);
+  const [isSolved, setIsSolved] = useState(false);
+  const socketUrl = 'http://localhost:5000' || "https://coding-online-application--iota.vercel.app/" || process.env.REACT_APP_API_URL; // עדכון ה-URL ל-Backend (לפי משתנה סביבה)
 
   // Fetch the code block from the server based on the blockId
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/code-blocks/${blockId}`)
+    console.log("Connecting")
+    // const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+    axios.get(`/api/code-blocks/${blockId}`)
       .then((response) => {
-        console.log('Code Block Fetched:', response.data);
-        setCodeBlock(response.data); 
+        console.log('Code Blocks Data:', response.data);
+        setCodeBlock(response.data);
       })
       .catch((error) => {
-        console.error('Error fetching code block:', error.message); 
+        console.error('Error fetching code block:', error.message);
       });
   }, [blockId]);
 
@@ -31,8 +34,8 @@ function CodeBlock() {
       return;
     }
 
-    socket.current = io('http://localhost:5000', { 
-      transports: ['websocket'], 
+    socket.current = io(socketUrl, {
+      transports: ['websocket'],
       query: { blockId }
     });
 
@@ -89,7 +92,7 @@ function CodeBlock() {
         console.warn('Socket is already null, skipping cleanup.');
       }
     };
-  }, [blockId]);
+  }, [blockId, socketUrl]);
 
   // Handle real-time updates for the code block
   useEffect(() => {
@@ -138,8 +141,10 @@ function CodeBlock() {
   // Save changes to the server
   const handleSave = async () => {
     try {
-      const response = await axios.put(`http://localhost:5000/api/code-blocks/${blockId}`, {
-        template: codeBlock.template, 
+      // const response = await axios.put(`http://localhost:5000/api/code-blocks/${blockId}`, {
+      const response = await axios.put(`/api/code-blocks/${blockId}`, {
+
+        template: codeBlock.template,
       });
       console.log('Code block updated:', response.data);
       alert('Changes saved!');
@@ -161,9 +166,9 @@ function CodeBlock() {
       <h3 className="code-editor-subtitle">Students in this page: {userCount}</h3>
       <textarea
         className="code-editor-input"
-        value={codeBlock.template} 
+        value={codeBlock.template}
         onChange={handleCodeChange}
-        readOnly={role === 'mentor'}       
+        readOnly={role === 'mentor'}
       />
       {role === 'student' && (
         <button className="code-editor-button" onClick={handleSave}>

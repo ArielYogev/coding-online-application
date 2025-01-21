@@ -1,15 +1,25 @@
 {
   "builds": [
     {
-      "src": "frontend/block_party/**",
-      "use": "@vercel/static"
+      "src": "frontend/block_party/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "build"
+      }
     },
     {
-      "src": "backend/**",
+      "src": "backend/server.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
-    { "src": "/backend/(.*)", "dest": "/api/$1" }
+    {
+      "src": "/api/(.*)",
+      "dest": "/backend/server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/frontend/block_party/build/$1"
+    }
   ]
 }
