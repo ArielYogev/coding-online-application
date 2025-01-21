@@ -6,7 +6,7 @@ const dotenv = require('dotenv');
 const { Pool } = require('pg');
 const path = require('path');
 const mongoose = require('mongoose');
-const corsOrigin = ["https://coding-online-application--iota.vercel.app/", process.env.REACT_APP_API_URL, 'http://localhost:3001'];
+const corsOrigin = ["https://coding-online-application.onrender.com", process.env.REACT_APP_API_URL, 'http://localhost:3001'];
 const CodeBlock = require('./model/CodeBlocks');
 
 dotenv.config();

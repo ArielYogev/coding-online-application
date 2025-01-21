@@ -11,7 +11,7 @@ function CodeBlock() {
   const [role, setRole] = useState(null);
   const [userCount, setUserCount] = useState(0);
   const [isSolved, setIsSolved] = useState(false);
-  const socketUrl = 'http://localhost:5000' || "https://coding-online-application--iota.vercel.app/" || process.env.REACT_APP_API_URL; // עדכון ה-URL ל-Backend (לפי משתנה סביבה)
+  const socketUrl = "https://coding-online-application.onrender.com" || process.env.REACT_APP_API_URL; // עדכון ה-URL ל-Backend (לפי משתנה סביבה)
 
   // Fetch the code block from the server based on the blockId
   useEffect(() => {
