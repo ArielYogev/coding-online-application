@@ -11,12 +11,11 @@ function CodeBlock() {
   const [role, setRole] = useState(null);
   const [userCount, setUserCount] = useState(0);
   const [isSolved, setIsSolved] = useState(false);
-  const socketUrl = "https://coding-online-application.onrender.com" || process.env.REACT_APP_API_URL; // עדכון ה-URL ל-Backend (לפי משתנה סביבה)
+  const socketUrl = "https://coding-online-application.onrender.com" || process.env.REACT_APP_API_URL; 
 
   // Fetch the code block from the server based on the blockId
   useEffect(() => {
     console.log("Connecting")
-    // const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
     axios.get(`/api/code-blocks/${blockId}`)
       .then((response) => {
         console.log('Code Blocks Data:', response.data);
@@ -25,6 +24,9 @@ function CodeBlock() {
       .catch((error) => {
         console.error('Error fetching code block:', error.message);
       });
+  }, [blockId]);
+  useEffect(() => {
+    localStorage.setItem('blockId', blockId);
   }, [blockId]);
 
   // Initialize and manage the WebSocket connection
@@ -141,7 +143,6 @@ function CodeBlock() {
   // Save changes to the server
   const handleSave = async () => {
     try {
-      // const response = await axios.put(`http://localhost:5000/api/code-blocks/${blockId}`, {
       const response = await axios.put(`/api/code-blocks/${blockId}`, {
 
         template: codeBlock.template,
