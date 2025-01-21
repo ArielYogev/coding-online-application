@@ -1,0 +1,12 @@
+{
+  "projects": [
+    {
+      "src": "frontend/block_party/",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "backend/",
+      "use": "@vercel/node"
+    }
+  ]
+}
