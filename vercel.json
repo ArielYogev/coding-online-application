@@ -1,12 +1,15 @@
 {
-  "projects": [
+  "builds": [
     {
-      "src": "frontend/block_party/",
+      "src": "frontend/block_party/**",
       "use": "@vercel/static"
     },
     {
-      "src": "backend/",
+      "src": "backend/**",
       "use": "@vercel/node"
     }
+  ],
+  "routes": [
+    { "src": "/backend/(.*)", "dest": "/api/$1" }
   ]
 }
