@@ -16,3 +16,5 @@ It features syntax highlighting, live code synchronization, and a lobby system t
 - 🎨 **Syntax highlighting**: Easy-to-read and professional coding environment.
 - 👨‍🏫 **Mentor-student roles**: Dynamic role assignment for better collaboration.
 - 😄 **Fun learning experience**: Big smiley face when the correct solution is achieved.
+- 
+**I tried implementing a caching mechanism to improve data upload speed, but it did not fully resolve the problem. Continuing to investigate the cause of the delay and exploring other optimization techniques.
